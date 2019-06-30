@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { TodoService } from './services';
 
 import './App.css';
@@ -49,21 +49,23 @@ class App extends Component {
                 <div className='App'>
                     <div className='container'>
                         <Header/>
+                        <Switch>
+                            <Route exact path='/' render={ props => (
+                                <Fragment>
+                                    {
+                                        /*
+                                            // pass next id as param
+                                            nextId={this.state.number}
+                                        */
+                                    }
+                                    <AddTodo addTodo={ this.addTodo }/>
+                                    <Todos todos={ this.state.todos } markComplete={ this.markComplete }
+                                           markDeleted={ this.markDeleted }/>
+                                </Fragment>
+                            ) }/>
+                            <Route path='/about' component={ About }/>
+                        </Switch>
                         
-                        <Route exact path='/' render={ props => (
-                            <Fragment>
-                                {
-                                    /*
-                                        // pass next id as param
-                                        nextId={this.state.number}
-                                    */
-                                }
-                                <AddTodo addTodo={ this.addTodo }/>
-                                <Todos todos={ this.state.todos } markComplete={ this.markComplete }
-                                       markDeleted={ this.markDeleted }/>
-                            </Fragment>
-                        ) }/>
-                        <Route path='/about' component={ About }/>
                     </div>
                 </div>
             </Router>

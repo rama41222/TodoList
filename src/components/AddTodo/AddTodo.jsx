@@ -4,11 +4,16 @@ import PropTypes from 'prop-types';
 
 class AddTodo extends Component {
     state = {
-        title: 'Todo',
+        title: 'My Todo: ',
         content: '',
     };
     
     onChange = (e) => this.setState({ [e.target.name]: e.target.value });
+    onSubmit = (e) => {
+        e.preventDefault();
+        this.props.addTodo({ title: this.state.title, content: this.state.content} );
+        this.setState({ content: '' });
+    };
     
     render() {
         return (
@@ -26,7 +31,7 @@ class AddTodo extends Component {
                     type='button'
                     value='Submit'
                     className='btn'
-                    onClick={this.props.addTodo.bind(this, { title: this.state.title, content: this.state.content} )}
+                    onClick={this.onSubmit}
                     style={{ flex: 2}}
                 />
             </form>
