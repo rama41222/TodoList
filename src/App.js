@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
+import axios from 'axios';
+import { BASE_URL } from "./constants";
 import './App.css';
-import { Todos,AddTodo, Header } from './components';
+import { Todos,AddTodo, Header, About } from './components';
 
 class App extends Component {
     state = {
         number: 1,
         todos: []
     };
+    
+    async componentDidMount(): void {
+        const { data } = await axios.get(`${BASE_URL}?_limit=10`).catch(console.log);
+        console.log(data);
+        const lastNumber = data.length;
+        this.setState({ todos: data, number: lastNumber });
+        
+    }
     
     nextId = () => {
       this.setState({ number: this.state.number + 1 })
@@ -33,15 +44,26 @@ class App extends Component {
     
     render() {
         return (
-            <div className='App'>
-                <div className='container'>
-                    <Header />
-                    <AddTodo addTodo={this.addTodo} nextId={this.state.number}/>
-                    <Todos todos={ this.state.todos } markComplete={ this.markComplete } markDeleted={this.markDeleted}/>
+            <Router>
+                <div className='App'>
+                    <div className='container'>
+                        <Header />
+                        
+                        <Route exact path='/' render={props => (
+                            <React.Fragment>
+                                <AddTodo addTodo={this.addTodo} nextId={this.state.number}/>
+                                <Todos todos={ this.state.todos } markComplete={ this.markComplete } markDeleted={this.markDeleted}/>
+                            </React.Fragment>
+                        )}/>
+                        <Route path='/about' component={About}/>
+                    </div>
                 </div>
-            </div>
+            </Router>
         );
     }
 }
 
 export default App;
+
+
+// Route will show everything in / and after slash. use exact keyworkd
