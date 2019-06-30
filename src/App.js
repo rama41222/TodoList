@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
-import axios from 'axios';
+import { apiClient } from './utils';
 import { BASE_URL } from "./constants";
+import axios from 'axios';
+
 import './App.css';
 import { Todos,AddTodo, Header, About } from './components';
 
@@ -12,7 +14,7 @@ class App extends Component {
     };
     
     async componentDidMount(): void {
-        const { data } = await axios.get(`${BASE_URL}?_limit=10`).catch(console.log);
+        const { data } = await apiClient.get(`?_limit=10`).catch(console.log);
         console.log(data);
         const lastNumber = data.length;
         this.setState({ todos: data, number: lastNumber });
