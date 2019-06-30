@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
-import { Route, BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { TodoService } from './services';
 
 import './App.css';
-import { Todos,AddTodo, Header, About } from './components';
+import { About, AddTodo, Header, Todos } from './components';
 
 class App extends Component {
     state = {
-        number: 1,
         todos: []
     };
     
     async componentDidMount(): void {
         const { data } = await TodoService.getTodos();
-        const lastNumber = data.length;
-        this.setState({ todos: data, number: lastNumber });
+        this.setState({ todos: data });
         
     }
     
@@ -23,22 +21,26 @@ class App extends Component {
     // };
     //
     
-    markComplete = (id) => {
-     this.setState({ todos: this.state.todos.map( todo => {
-            if(todo.id === id) {
-                todo.completed = !todo.completed;
-            }
-            
-            return todo;
-         })
-     })
+    markComplete = async (id) => {
+        await TodoService.updateTodo(id, { completed: true });
+        this.setState({
+            todos: this.state.todos.map(todo => {
+                if (todo.id === id) {
+                    todo.completed = !todo.completed;
+                }
+                return todo;
+            })
+        })
     };
     
-    addTodo = (todo) => {
-        this.setState({ todos: [ todo, ...this.state.todos ]})
+    addTodo = async (todo) => {
+        const { data } = await TodoService.addTodo(todo).catch(console.error);
+        this.setState({ todos: [data, ...this.state.todos] })
     };
-    markDeleted = (id) => {
-        this.setState({ todos: this.state.todos.filter(todo => (todo.id !== id )) });
+    
+    markDeleted = async (id) => {
+        await TodoService.deleteTodo(id).catch(console.error);
+        this.setState({ todos: this.state.todos.filter(todo => (todo.id !== id)) });
     };
     
     render() {
@@ -46,9 +48,9 @@ class App extends Component {
             <Router>
                 <div className='App'>
                     <div className='container'>
-                        <Header />
+                        <Header/>
                         
-                        <Route exact path='/' render={props => (
+                        <Route exact path='/' render={ props => (
                             <React.Fragment>
                                 {
                                     /*
@@ -56,11 +58,12 @@ class App extends Component {
                                         nextId={this.state.number}
                                     */
                                 }
-                                <AddTodo addTodo={this.addTodo} />
-                                <Todos todos={ this.state.todos } markComplete={ this.markComplete } markDeleted={this.markDeleted}/>
+                                <AddTodo addTodo={ this.addTodo }/>
+                                <Todos todos={ this.state.todos } markComplete={ this.markComplete }
+                                       markDeleted={ this.markDeleted }/>
                             </React.Fragment>
-                        )}/>
-                        <Route path='/about' component={About}/>
+                        ) }/>
+                        <Route path='/about' component={ About }/>
                     </div>
                 </div>
             </Router>
@@ -72,3 +75,4 @@ export default App;
 
 
 // Route will show everything in / and after slash. use exact keyworkd
+// Todo: Code refactoring

@@ -26,7 +26,7 @@ class AddTodo extends Component {
                     type='button'
                     value='Submit'
                     className='btn'
-                    onClick={this.props.addTodo.bind(this, { id: this.props.nextId, title: this.state.title, content: this.state.content} )}
+                    onClick={this.props.addTodo.bind(this, { title: this.state.title, content: this.state.content} )}
                     style={{ flex: 2}}
                 />
             </form>
