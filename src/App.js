@@ -19,10 +19,10 @@ class App extends Component {
         
     }
     
-    nextId = () => {
-      this.setState({ number: this.state.number + 1 })
-    };
-    
+    // nextId = () => {
+    //   this.setState({ number: this.state.number + 1 })
+    // };
+    //
     markComplete = (id) => {
      this.setState({ todos: this.state.todos.map( todo => {
             if(todo.id === id) {
@@ -35,8 +35,7 @@ class App extends Component {
     };
     
     addTodo = (todo) => {
-        this.nextId();
-        this.setState({ todos: [todo, ...this.state.todos ]})
+        this.setState({ todos: [ todo, ...this.state.todos ]})
     };
     markDeleted = (id) => {
         this.setState({ todos: this.state.todos.filter(todo => (todo.id !== id )) });
@@ -51,7 +50,13 @@ class App extends Component {
                         
                         <Route exact path='/' render={props => (
                             <React.Fragment>
-                                <AddTodo addTodo={this.addTodo} nextId={this.state.number}/>
+                                {
+                                    /*
+                                        // pass next id as param
+                                        nextId={this.state.number}
+                                    */
+                                }
+                                <AddTodo addTodo={this.addTodo} />
                                 <Todos todos={ this.state.todos } markComplete={ this.markComplete } markDeleted={this.markDeleted}/>
                             </React.Fragment>
                         )}/>

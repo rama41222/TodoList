@@ -32,8 +32,6 @@ class AddTodo extends Component {
             </form>
         );
     }
-
-    
 }
 
 AddTodo.propTypes = {
