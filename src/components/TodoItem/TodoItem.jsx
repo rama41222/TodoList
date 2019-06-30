@@ -24,11 +24,14 @@ class TodoItem extends Component {
     
     getButtonStyle = () => {
       return {
-          margin: '10px',
+          margin:'1px',
+          marginRight: '12px',
           padding: '10px',
           borderRadius: '30%',
           backgroundColor: '#ff7b02',
           float: 'right',
+          right: '1%',
+          position: 'absolute'
       }
     };
     
