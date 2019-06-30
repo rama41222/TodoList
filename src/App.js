@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { TodoService } from './services';
 
@@ -51,7 +51,7 @@ class App extends Component {
                         <Header/>
                         
                         <Route exact path='/' render={ props => (
-                            <React.Fragment>
+                            <Fragment>
                                 {
                                     /*
                                         // pass next id as param
@@ -61,7 +61,7 @@ class App extends Component {
                                 <AddTodo addTodo={ this.addTodo }/>
                                 <Todos todos={ this.state.todos } markComplete={ this.markComplete }
                                        markDeleted={ this.markDeleted }/>
-                            </React.Fragment>
+                            </Fragment>
                         ) }/>
                         <Route path='/about' component={ About }/>
                     </div>

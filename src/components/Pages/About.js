@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 const About = () => {
     return(
-        <React.Fragment>
+        <Fragment>
             <h1>About</h1>
             <p>Todo List app v 1.0.0</p>
-        </React.Fragment>
+        </Fragment>
     );
 };
 
