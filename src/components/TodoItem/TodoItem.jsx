@@ -29,7 +29,6 @@ class TodoItem extends Component {
           padding: '10px',
           borderRadius: '30%',
           backgroundColor: '#ff7b02',
-          float: 'right',
           right: '1%',
           position: 'absolute'
       }
