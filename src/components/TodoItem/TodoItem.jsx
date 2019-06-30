@@ -39,8 +39,8 @@ class TodoItem extends Component {
         return (
             <div style={this.getParentStyle()} >
                 <input type='checkbox' onChange={this.props.markComplete.bind(this, id)}/>
-                <p style={this.getChildStyle()} >{this.props.todo.title}</p>
-                <p style={this.getChildStyle()} >{this.props.todo.content}</p>
+                <p style={this.getChildStyle()} >{title}</p>
+                <p style={this.getChildStyle()} >{content}</p>
                 <button onClick={this.props.markDeleted.bind(this, id)} style={this.getButtonStyle()}>X</button>
             </div>
         );
