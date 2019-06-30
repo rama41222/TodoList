@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
-import { apiClient } from './utils';
-import { BASE_URL } from "./constants";
-import axios from 'axios';
+import { TodoService } from './services';
 
 import './App.css';
 import { Todos,AddTodo, Header, About } from './components';
@@ -14,8 +12,7 @@ class App extends Component {
     };
     
     async componentDidMount(): void {
-        const { data } = await apiClient.get(`?_limit=10`).catch(console.log);
-        console.log(data);
+        const { data } = await TodoService.getTodos();
         const lastNumber = data.length;
         this.setState({ todos: data, number: lastNumber });
         
@@ -25,6 +22,7 @@ class App extends Component {
     //   this.setState({ number: this.state.number + 1 })
     // };
     //
+    
     markComplete = (id) => {
      this.setState({ todos: this.state.todos.map( todo => {
             if(todo.id === id) {

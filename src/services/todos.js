@@ -18,7 +18,7 @@ const getTodo = async (id) => {
     return apiClient.get(`/${id}`).catch(console.error);
 };
 
-export {
+export default {
     addTodo,
     deleteTodo,
     getTodos,
